@@ -1,0 +1,2255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="narrative">
+  <meta name="design-style" content="canopy">
+  <title>Cuadernos de Ecología Política Latinoamericana | Colonialismo, Metabolismo y Post-extractivismo</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,400..700;1,7..72,400..600&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <!-- CDN Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+
+  <style>
+    :root {
+      color-scheme: light;
+
+      /* Page and surfaces (Canopy earth strata) */
+      --background: #faf6ef;
+      --surface-container-low: #f0eae0;
+      --surface-container: #e8e0d2;
+      --surface-container-high: #ddd3c2;
+
+      /* Ink */
+      --on-surface: #2a302b;
+      --on-surface-variant: #4a524b;
+
+      /* Lines */
+      --outline: #737872;
+      --outline-variant: #cbc5b8;
+
+      /* Accents */
+      --primary: #366948;
+      --on-primary: #ffffff;
+      --primary-container: #d8efe0;
+      --on-primary-container: #1f4d30;
+      --secondary: #5c635c;
+      --tertiary: #8f5822;
+      --tertiary-container: #f2d4a7;
+      --on-tertiary-container: #6e3f0c;
+      --error: #b83230;
+      --on-error: #ffffff;
+
+      /* Semantics */
+      --positive: #2d6a4f;
+      --warning: #b7791f;
+      --focus: #366948;
+
+      /* Data series */
+      --data-1: #366948;
+      --data-2: #8f5822;
+      --data-3: #a85438;
+      --data-4: #4b6b78;
+      --data-context: #b5b0a3;
+
+      /* Fonts */
+      --font-headline: 'Literata', serif;
+      --font-body: 'Nunito Sans', sans-serif;
+      --font-label: 'Geist Mono', monospace;
+
+      /* Shape */
+      --rounded: 0.625rem;
+      --rounded-lg: 1rem;
+      --rounded-full: 9999px;
+
+      /* Style effects */
+      --shadow-soft: 0 4px 20px rgb(42 48 43 / 0.06);
+      --shadow-soft-hover: 0 8px 28px rgb(42 48 43 / 0.09);
+      --border-soft: 1px solid rgb(203 197 184 / 0.65);
+      --focus-glow: 0 0 0 4px rgb(54 105 72 / 0.18);
+
+      /* Typography Scale (Narrative) */
+      --display-size: clamp(2.25rem, 1.4rem + 3vw, 3.75rem);
+      --headline-size: clamp(1.625rem, 1.15rem + 1.8vw, 2.375rem);
+      --subhead-size: clamp(1.15rem, 1.02rem + 0.5vw, 1.375rem);
+      --body-size: clamp(1.02rem, 0.96rem + 0.2vw, 1.125rem);
+      --label-size: clamp(0.72rem, 0.68rem + 0.15vw, 0.8125rem);
+
+      /* Spacing scale */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
+      --space-3xl: 6rem;
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    /* Base Reset */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    header { position: static !important; }
+
+    .page-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--space-lg);
+    }
+
+    /* Masthead & Editorial Header */
+    .editorial-header {
+      border-bottom: 2px solid var(--surface-container);
+      padding-bottom: var(--space-xl);
+      margin-bottom: var(--space-xl);
+    }
+
+    .masthead-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--outline-variant);
+      margin-bottom: var(--space-lg);
+    }
+
+    .kicker-tag {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--tertiary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .masthead-issue {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--secondary);
+    }
+
+    .editorial-title {
+      font-family: var(--font-headline);
+      font-size: var(--display-size);
+      font-weight: 600;
+      line-height: 1.12;
+      letter-spacing: -0.015em;
+      color: var(--on-surface);
+      margin: 0 0 var(--space-md) 0;
+      max-width: 24ch;
+    }
+
+    .editorial-subtitle {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-style: italic;
+      color: var(--on-surface-variant);
+      margin: 0 0 var(--space-lg) 0;
+      max-width: 65ch;
+      line-height: 1.45;
+    }
+
+    .dossier-curators {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-lg);
+      font-size: 0.875rem;
+      color: var(--secondary);
+      border-top: 1px dashed var(--outline-variant);
+      padding-top: var(--space-md);
+    }
+
+    .curator-pill {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .curator-pill strong {
+      color: var(--on-surface);
+    }
+
+    /* Rhythm Strip (Canopy phenology pattern) */
+    .cycle-strip {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md) var(--space-lg);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+      border: var(--border-soft);
+    }
+
+    .cycle-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--tertiary);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+
+    .cycle-steps {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+
+    .cycle-cell {
+      font-family: var(--font-label);
+      font-size: 0.72rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      background: var(--surface-container-high);
+      color: var(--secondary);
+      font-weight: 500;
+    }
+
+    .cycle-cell.is-active {
+      background: var(--primary);
+      color: var(--on-primary);
+      font-weight: 600;
+    }
+
+    .cycle-cell.is-highlight {
+      background: var(--tertiary-container);
+      color: var(--on-tertiary-container);
+      font-weight: 600;
+    }
+
+    /* Primary Navigation Tabs */
+    .tab-navigation-bar {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-sm);
+      margin-bottom: var(--space-2xl);
+    }
+
+    .nav-tab-btn {
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      padding: var(--space-md) var(--space-sm);
+      font-family: var(--font-body);
+      font-weight: 600;
+      color: var(--on-surface-variant);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-xs);
+      transition: background-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
+      text-align: left;
+    }
+
+    .nav-tab-btn:hover {
+      background: var(--surface-container);
+      color: var(--on-surface);
+      border-color: var(--outline);
+    }
+
+    .nav-tab-btn:focus-visible {
+      outline: var(--focus-glow);
+    }
+
+    .nav-tab-btn.active {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .tab-number {
+      font-family: var(--font-label);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      opacity: 0.85;
+      text-transform: uppercase;
+    }
+
+    .nav-tab-btn.active .tab-number {
+      opacity: 1;
+      color: var(--tertiary-container);
+    }
+
+    .tab-title {
+      font-size: 0.95rem;
+      line-height: 1.25;
+    }
+
+    /* Tab Panels */
+    .tab-panel {
+      display: none;
+      opacity: 0;
+      transition: opacity var(--dur-long) var(--ease-out);
+    }
+
+    .tab-panel.active {
+      display: block;
+      opacity: 1;
+      animation: fadeInPanel var(--dur-long) var(--ease-out) forwards;
+    }
+
+    @keyframes fadeInPanel {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Content Layout Components */
+    .prose-section {
+      max-width: 70ch;
+      margin-bottom: var(--space-xl);
+    }
+
+    .prose-section h2 {
+      font-family: var(--font-headline);
+      font-size: var(--headline-size);
+      font-weight: 600;
+      line-height: 1.2;
+      color: var(--on-surface);
+      margin: 0 0 var(--space-md) 0;
+    }
+
+    .prose-section h3 {
+      font-family: var(--font-headline);
+      font-size: var(--subhead-size);
+      font-weight: 600;
+      color: var(--on-surface);
+      margin: var(--space-lg) 0 var(--space-xs) 0;
+    }
+
+    .prose-section p {
+      margin: 0 0 var(--space-md) 0;
+      color: var(--on-surface);
+    }
+
+    .lead-paragraph {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: var(--on-surface);
+      font-weight: 400;
+    }
+
+    .highlight-leaf-card {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      margin: var(--space-xl) 0;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .highlight-leaf-card h4 {
+      font-family: var(--font-headline);
+      font-size: 1.2rem;
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--on-primary-container);
+    }
+
+    .highlight-leaf-card p {
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--on-primary-container);
+    }
+
+    .highlight-leaf-card p:last-child { margin-bottom: 0; }
+
+    /* Editorial Pull Quote */
+    .editorial-pullquote {
+      border-left: 3px solid var(--tertiary);
+      padding: var(--space-md) var(--space-lg);
+      margin: var(--space-xl) 0;
+      background: var(--surface-container-low);
+      border-radius: 0 var(--rounded-lg) var(--rounded-lg) 0;
+    }
+
+    .quote-body {
+      font-family: var(--font-headline);
+      font-size: 1.25rem;
+      font-style: italic;
+      line-height: 1.45;
+      color: var(--on-surface);
+      margin-bottom: var(--space-xs);
+    }
+
+    .quote-author {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      color: var(--tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Grids & Cards */
+    .card-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+      gap: var(--space-lg);
+      margin: var(--space-xl) 0;
+    }
+
+    .card-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+      gap: var(--space-lg);
+      margin: var(--space-xl) 0;
+    }
+
+    .card-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+      gap: var(--space-md);
+      margin: var(--space-xl) 0;
+    }
+
+    .loam-card {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      border: var(--border-soft);
+      transition: transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
+    }
+
+    .loam-card.interactive-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-soft-hover);
+    }
+
+    .card-meta-tag {
+      font-family: var(--font-label);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--tertiary);
+      font-weight: 600;
+      margin-bottom: var(--space-xs);
+      display: block;
+    }
+
+    .loam-card h4 {
+      font-family: var(--font-headline);
+      font-size: 1.15rem;
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--on-surface);
+    }
+
+    .loam-card p {
+      font-size: 0.95rem;
+      margin: 0 0 var(--space-sm) 0;
+      color: var(--on-surface-variant);
+    }
+
+    .loam-card p:last-child { margin-bottom: 0; }
+
+    /* Interactive Comparison Table */
+    .table-container {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      border: var(--border-soft);
+      overflow-x: auto;
+      margin: var(--space-xl) 0;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.92rem;
+    }
+
+    .custom-table th {
+      background: var(--surface-container);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--on-surface);
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+
+    .custom-table td {
+      padding: var(--space-md);
+      border-bottom: 1px solid var(--outline-variant);
+      color: var(--on-surface);
+      vertical-align: top;
+    }
+
+    .custom-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .custom-table tr:hover td {
+      background: var(--surface-container);
+    }
+
+    .gen-badge {
+      display: inline-block;
+      font-family: var(--font-label);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      background: var(--tertiary-container);
+      color: var(--on-tertiary-container);
+      white-space: nowrap;
+    }
+
+    .gen-badge.active-gen {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+
+    /* Calculator & Simulation Panels */
+    .interactive-workbench {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      border: 1px solid var(--outline-variant);
+      padding: var(--space-xl);
+      margin: var(--space-xl) 0;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .workbench-header {
+      margin-bottom: var(--space-lg);
+      border-bottom: 1px solid var(--outline-variant);
+      padding-bottom: var(--space-md);
+    }
+
+    .workbench-header h3 {
+      font-family: var(--font-headline);
+      font-size: 1.35rem;
+      margin: 0 0 var(--space-xs) 0;
+      color: var(--on-surface);
+    }
+
+    .workbench-header p {
+      font-size: 0.95rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+    }
+
+    .workbench-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: var(--space-xl);
+      align-items: start;
+    }
+
+    .control-group {
+      margin-bottom: var(--space-md);
+    }
+
+    .control-label {
+      display: block;
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--on-surface);
+      margin-bottom: var(--space-xs);
+    }
+
+    .input-field, .select-field {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      border: 1px solid var(--outline);
+      border-radius: var(--rounded);
+      background: var(--background);
+      color: var(--on-surface);
+      transition: border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+
+    .input-field:focus, .select-field:focus {
+      outline: 0;
+      border-color: var(--primary);
+      box-shadow: var(--focus-glow);
+    }
+
+    .range-slider-wrapper {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+
+    .range-slider {
+      flex: 1;
+      height: 6px;
+      accent-color: var(--primary);
+      cursor: pointer;
+    }
+
+    .number-sync-input {
+      width: 90px;
+      padding: 0.5rem;
+      font-family: var(--font-label);
+      font-size: 0.95rem;
+      border: 1px solid var(--outline);
+      border-radius: var(--rounded);
+      background: var(--background);
+      text-align: right;
+    }
+
+    /* Output Results Box */
+    .results-display-box {
+      background: var(--background);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      border: 1px solid var(--outline-variant);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-bottom: var(--space-xs);
+      border-bottom: 1px dashed var(--outline-variant);
+    }
+
+    .metric-row:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .metric-name {
+      font-size: 0.9rem;
+      color: var(--on-surface-variant);
+    }
+
+    .metric-value-huge {
+      font-family: var(--font-headline);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .metric-value-medium {
+      font-family: var(--font-label);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--tertiary);
+    }
+
+    .status-alert-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      padding: 0.4rem 0.8rem;
+      border-radius: var(--rounded-full);
+      font-family: var(--font-label);
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-top: var(--space-xs);
+    }
+
+    .status-alert-pill.danger {
+      background: #fde8e8;
+      color: var(--error);
+      border: 1px solid #f8b4b4;
+    }
+
+    .status-alert-pill.warning {
+      background: var(--tertiary-container);
+      color: var(--on-tertiary-container);
+      border: 1px solid #ebd09c;
+    }
+
+    .status-alert-pill.safe {
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      border: 1px solid #c2e6cd;
+    }
+
+    /* Chart Containers */
+    .chart-wrapper {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      border: var(--border-soft);
+      margin: var(--space-xl) 0;
+      position: relative;
+    }
+
+    .chart-canvas-container {
+      position: relative;
+      width: 100%;
+      min-height: 340px;
+    }
+
+    /* Filter Buttons Group */
+    .filter-btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-bottom: var(--space-lg);
+    }
+
+    .filter-btn {
+      background: var(--surface-container);
+      border: 0;
+      border-radius: var(--rounded-full);
+      padding: 0.35rem 0.9rem;
+      font-family: var(--font-label);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--on-surface-variant);
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), color var(--dur-micro) var(--ease-out);
+    }
+
+    .filter-btn:hover {
+      background: var(--surface-container-high);
+      color: var(--on-surface);
+    }
+
+    .filter-btn.active {
+      background: var(--primary);
+      color: var(--on-primary);
+      font-weight: 600;
+    }
+
+    /* Search Input */
+    .search-bar-wrapper {
+      position: relative;
+      margin-bottom: var(--space-lg);
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.75rem 1rem 0.75rem 2.5rem;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline);
+      background: var(--surface-container-low);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      color: var(--on-surface);
+    }
+
+    .search-icon-pos {
+      position: absolute;
+      left: 0.85rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--secondary);
+      pointer-events: none;
+    }
+
+    /* Accordion / Drawer details */
+    .accordion-item {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded);
+      border: var(--border-soft);
+      margin-bottom: var(--space-sm);
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      width: 100%;
+      padding: var(--space-md) var(--space-lg);
+      background: transparent;
+      border: 0;
+      text-align: left;
+      font-family: var(--font-headline);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--on-surface);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color var(--dur-micro) var(--ease-out);
+    }
+
+    .accordion-header:hover {
+      background: var(--surface-container);
+    }
+
+    .accordion-body {
+      padding: 0 var(--space-lg) var(--space-md) var(--space-lg);
+      display: none;
+      font-size: 0.95rem;
+      color: var(--on-surface-variant);
+      border-top: 1px dashed var(--outline-variant);
+      padding-top: var(--space-sm);
+    }
+
+    .accordion-item.open .accordion-body {
+      display: block;
+    }
+
+    /* Footer */
+    .editorial-footer {
+      border-top: 2px solid var(--surface-container);
+      margin-top: var(--space-3xl);
+      padding-top: var(--space-xl);
+      padding-bottom: var(--space-2xl);
+      color: var(--secondary);
+      font-size: 0.875rem;
+    }
+
+    .footer-sources-box {
+      background: var(--surface-container-low);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      border: var(--border-soft);
+      margin-bottom: var(--space-lg);
+    }
+
+    .footer-sources-box h4 {
+      font-family: var(--font-headline);
+      font-size: 1.05rem;
+      color: var(--on-surface);
+      margin: 0 0 var(--space-sm) 0;
+    }
+
+    .footer-sources-box ul {
+      margin: 0;
+      padding-left: var(--space-md);
+    }
+
+    .footer-sources-box li {
+      margin-bottom: var(--space-xs);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 860px) {
+      .tab-navigation-bar {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .workbench-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .tab-navigation-bar {
+        grid-template-columns: 1fr;
+      }
+      .page-container {
+        padding: var(--space-sm);
+      }
+      .cycle-strip {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .custom-table {
+        font-size: 0.82rem;
+      }
+      .custom-table th, .custom-table td {
+        padding: 0.5rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-container">
+    
+    <!-- Masthead Editorial Header -->
+    <header class="editorial-header">
+      <div class="masthead-meta">
+        <span class="kicker-tag">
+          <i data-lucide="book-open" style="width: 14px; height: 14px;"></i>
+          Cuadernos de Ecología Política Latinoamericana
+        </span>
+        <span class="masthead-issue">Vol. XVII • Dossier de Investigación Crítica</span>
+      </div>
+
+      <h1 class="editorial-title">Ecología Política, Colonialismo y Extractivismo en América Latina</h1>
+      
+      <p class="editorial-subtitle">
+        Una indagación biofísica, histórica y territorial sobre el metabolismo social, la violencia de las extrahecciones y los senderos hacia las transiciones post-extractivistas.
+      </p>
+
+      <div class="dossier-curators">
+        <div class="curator-pill">
+          <i data-lucide="feather" style="width: 14px; height: 14px;"></i>
+          <span>Autores marco: <strong>Joan Martínez Alier</strong> (UAB), <strong>Eduardo Gudynas</strong> (CLAES), <strong>Horacio Machado Aráoz</strong>, <strong>Gian Carlo Delgado Ramos</strong></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Structural Cycle Strip (Canopy Almanac style) -->
+    <div class="cycle-strip" aria-label="Navegación general del dossier">
+      <div class="cycle-label">
+        <i data-lucide="layers" style="width: 16px; height: 16px;"></i>
+        <span>Ruta Temática del Dossier</span>
+      </div>
+      <div class="cycle-steps">
+        <span class="cycle-cell is-active" id="strip-step-1">I. Metabolismo &amp; Ecología Política</span>
+        <span class="cycle-cell" id="strip-step-2">II. Colonialismo &amp; 4 Generaciones</span>
+        <span class="cycle-cell" id="strip-step-3">III. Enclaves, EROI &amp; Precipicio</span>
+        <span class="cycle-cell" id="strip-step-4">IV. Deuda, Intercambio &amp; Post-Extractivismo</span>
+      </div>
+    </div>
+
+    <!-- 4 Tabs Interactive Navigation Bar -->
+    <nav class="tab-navigation-bar" role="tablist" aria-label="Secciones del Dossier">
+      <button class="nav-tab-btn active" role="tab" id="tab-btn-1" aria-selected="true" aria-controls="panel-1" onclick="switchDossierTab(1)">
+        <span class="tab-number">Parte 01</span>
+        <span class="tab-title">Ecología Política &amp; Metabolismo Social</span>
+      </button>
+
+      <button class="nav-tab-btn" role="tab" id="tab-btn-2" aria-selected="false" aria-controls="panel-2" onclick="switchDossierTab(2)">
+        <span class="tab-number">Parte 02</span>
+        <span class="tab-title">Colonialismo &amp; 4 Generaciones Extractivistas</span>
+      </button>
+
+      <button class="nav-tab-btn" role="tab" id="tab-btn-3" aria-selected="false" aria-controls="panel-3" onclick="switchDossierTab(3)">
+        <span class="tab-number">Parte 03</span>
+        <span class="tab-title">Estructuras Políticas, EROI &amp; Precipicio Energético</span>
+      </button>
+
+      <button class="nav-tab-btn" role="tab" id="tab-btn-4" aria-selected="false" aria-controls="panel-4" onclick="switchDossierTab(4)">
+        <span class="tab-number">Parte 04</span>
+        <span class="tab-title">Distribución, Deuda Ecológica &amp; Post-Extractivismo</span>
+      </button>
+    </nav>
+
+    <!-- =================================================================== -->
+    <!-- TAB PANEL 1: METABOLISMO SOCIAL Y ECOLOGÍA POLÍTICA               -->
+    <!-- =================================================================== -->
+    <main>
+      <section id="panel-1" class="tab-panel active" role="tabpanel" aria-labelledby="tab-btn-1">
+        
+        <article class="prose-section">
+          <h2>1. Fundamentos: De la Economía Crematística a la Ecología Política</h2>
+          <p class="lead-paragraph">
+            La Ecología Política no es una mera rama técnica de la gestión ambiental ni una sociología abstracta de recursos. Nace de la necesidad de estudiar cómo el poder político y las asimetrías de clase, etnia y territorio configuran los <strong>conflictos ecológico-distributivos</strong>.
+          </p>
+          <p>
+            Como fundamenta Joan Martínez Alier, la economía convencional padece una ceguera estructural: concibe el proceso económico como un circuito circular cerrado de valores monetarios crematísticos, donde la naturaleza entra como externalidad cuantificable en dinero. Frente a ese espejismo del «PIB verde» o del «ahorro genuino» del Banco Mundial, la Economía Ecológica y la Ecología Política asumen el principio de <em>inconmensurabilidad de valores</em>: no todos los bienes de la vida admiten un común denominador monetario. La destrucción de una cuenca sagrada, el etnocidio silencioso de un pueblo originario o el calentamiento global no se resuelven con cheques de indemnización.
+          </p>
+        </article>
+
+        <!-- Pullquote -->
+        <blockquote class="editorial-pullquote">
+          <p class="quote-body">
+            «El capitalismo no es un sistema de asignación eficiente con algunos fallos de mercado; es un sistema de costos sociales no pagados, un mecanismo implacable para transferir pasivos y entropía a los pobres, a las generaciones futuras y a otras especies.»
+          </p>
+          <cite class="quote-author">— Joan Martínez Alier, citando a K. William Kapp (1950)</cite>
+        </blockquote>
+
+        <!-- 3 Pillars of Social Metabolism Cards -->
+        <div class="prose-section">
+          <h3>La Física del Sistema Económico: Tres Indicadores de Sustentabilidad Fuerte</h3>
+          <p>
+            Para que la ecología política sea rigurosa, debe enraizarse en la biología y la termodinámica del <em>metabolismo social (Stoffwechsel)</em>, concepto que Carlos Marx retomó de Liebig y Moleschott para explicar la ruptura metabólica en los ciclos de nutrientes de la tierra. Martínez Alier distingue tres indicadores físicos cruciales:
+          </p>
+        </div>
+
+        <div class="card-grid-3">
+          <div class="loam-card">
+            <span class="card-meta-tag">Indicador 01 • Masa</span>
+            <h4>Contabilidad de Flujo de Materiales (MFA)</h4>
+            <p>
+              Calculado en toneladas per cápita al año según el método de Eurostat y el Wuppertal Institut. Suma extracciones domésticas más importaciones, determinando cuánto se acumula en infraestructura, cuánto se exporta y cuánto se descarga como residuo tóxico o gases de efecto invernadero.
+            </p>
+            <div style="font-family: var(--font-label); font-size: 0.8rem; color: var(--tertiary);">
+              → Revela el déficit físico: el Sur exporta toneladas y recibe papel moneda devaluado.
+            </div>
+          </div>
+
+          <div class="loam-card">
+            <span class="card-meta-tag">Indicador 02 • Biomasa</span>
+            <h4>Apropiación Humana de la HANPP</h4>
+            <p>
+              Mide la <em>Apropiación Humana de la Producción Primaria Neta</em> (Vitousek, Haberl). Es el cociente entre la biomasa fotosintética que los humanos cosechan o destruyen (por monocultivos o deforestación) frente a la producción biológica potencial del ecosistema original.
+            </p>
+            <div style="font-family: var(--font-label); font-size: 0.8rem; color: var(--primary);">
+              → A escala mundial supera el 40%, provocando la sexta extinción masiva de especies.
+            </div>
+          </div>
+
+          <div class="loam-card">
+            <span class="card-meta-tag">Indicador 03 • Termodinámica</span>
+            <h4>Energía Endosomática vs. Exosomática</h4>
+            <p>
+              Distinción biológica de Lotka y Margalef. El consumo <em>endosomático</em> (alimentos para el cuerpo humano) es fisiológicamente constante (~10 MJ/día = 3.65 GJ/año). El consumo <em>exosomático</em> (artefactos, minería, aviación) alcanza hasta 200 GJ/año en el Norte global y tiene elasticidad-ingreso infinita.
+            </p>
+            <div style="font-family: var(--font-label); font-size: 0.8rem; color: var(--error);">
+              → Motor central de las guerras por recursos y el saqueo de hidrocarburos.
+            </div>
+          </div>
+        </div>
+
+        <!-- Pale-leaf Highlight Card -->
+        <div class="highlight-leaf-card">
+          <h4>La Ley de la Entropía: Por Qué No Existe una Economía Circular Capitalista</h4>
+          <p>
+            Nicholas Georgescu-Roegen (1971) demostró que el proceso productivo no es circular, sino unidireccional y entrópico. Los combustibles fósiles quemados se disipan de manera irreversible en calor y dióxido de carbono; los minerales se oxidan, dispersan o degradan. Como el reciclaje de cobre, plomo o aluminio raramente supera el 30%–50%, el metabolismo industrial voraz se ve forzado perpetuamente a invadir <strong>nuevas fronteras de extracción</strong> en la Amazonía, los Andes y los valles campesinos.
+          </p>
+        </div>
+
+        <!-- Interactive Commodity Chains Conflict Filter -->
+        <div class="interactive-workbench">
+          <div class="workbench-header">
+            <span class="kicker-tag">Catálogo Empírico EJOLT &amp; EJAtlas</span>
+            <h3>Tipología de Conflictos Ecológico-Distributivos en la Cadena de Mercancías</h3>
+            <p>
+              Siguiendo la clasificación inductiva de Joan Martínez Alier, los conflictos socio-ambientales se despliegan a lo largo de las distintas etapas de las <em>commodity chains (filières)</em>. Filtre a continuación para examinar sus manifestaciones concretas y lenguajes de resistencia:
+            </p>
+          </div>
+
+          <div class="filter-btn-group" role="group" aria-label="Filtrar conflictos por etapa metabólica">
+            <button class="filter-btn active" onclick="filterConflicts('all', this)">Todas las Etapas (14 Tipos)</button>
+            <button class="filter-btn" onclick="filterConflicts('extraccion', this)">1. Extracción de Materia &amp; Energía</button>
+            <button class="filter-btn" onclick="filterConflicts('transporte', this)">2. Transporte e Infraestructura</button>
+            <button class="filter-btn" onclick="filterConflicts('residuos', this)">3. Residuos, Sumideros &amp; Riesgos</button>
+          </div>
+
+          <div class="card-grid-2" id="conflicts-container">
+            <!-- Dynamically populated via JS -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- TAB PANEL 2: COLONIALISMO E IMPERIALISMO ECOLÓGICO                -->
+      <!-- =================================================================== -->
+      <section id="panel-2" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-2">
+        
+        <article class="prose-section">
+          <h2>2. Colonialismo, Imperialismo Ecológico y las 4 Generaciones del Extractivismo</h2>
+          <p class="lead-paragraph">
+            El extractivismo contemporáneo no es un accidente técnico ni una mera etapa económica transitoria: es la continuidad histórica de la colonialidad del poder y del saber. Como sostiene Horacio Machado Aráoz, la colonización de América inauguró un régimen de «imperialismo ecológico» mediante el cual la naturaleza del Sur fue reducida a cantera material y sumidero residual para subsidiar la acumulación originaria europea.
+          </p>
+          <p>
+            Desde el saqueo argentífero de Potosí y Zacatecas en los siglos XVI y XVII hasta los 400 millones de toneladas de hierro y soja que Brasil despacha actualmente, la lógica de la <em>Raubwirtschaft</em> (economía de rapiña descrita por Jean Brunhes y Raumoulin) permanece inalterada.
+          </p>
+        </article>
+
+        <!-- Eduardo Gudynas Rigorous Definition Box -->
+        <div class="loam-card" style="margin-bottom: var(--space-xl); border-left: 4px solid var(--primary);">
+          <span class="card-meta-tag">Criterio Epistemológico Fundamental</span>
+          <h3 style="font-family: var(--font-headline); margin: 0 0 var(--space-sm) 0;">¿Qué es (y qué no es) Extractivismo según Eduardo Gudynas?</h3>
+          <p>
+            Eduardo Gudynas (2015) advierte contra la liviandad conceptual de llamar «extractivismo» a cualquier actividad humana. Para delimitar el fenómeno con rigor ecológico y político, una explotación debe cumplir <strong>simultáneamente tres condiciones</strong>:
+          </p>
+          <div class="card-grid-3" style="margin-top: var(--space-md);">
+            <div style="background: var(--background); padding: var(--space-md); border-radius: var(--rounded);">
+              <strong style="color: var(--primary);">1. Gran Volumen o Intensidad:</strong>
+              <p style="font-size: 0.9rem; margin-top: 0.25rem;">Remoción masiva de materia (megaminería >1M ton/año y >1.000 ha) o alta toxicidad físico-química.</p>
+            </div>
+            <div style="background: var(--background); padding: var(--space-md); border-radius: var(--rounded);">
+              <strong style="color: var(--primary);">2. Escaso o Nulo Procesamiento:</strong>
+              <p style="font-size: 0.9rem; margin-top: 0.25rem;">Exportación de «bienes primarios» brutos (CUCI-ONU: minerales, crudo, granos sin manufactura agregada).</p>
+            </div>
+            <div style="background: var(--background); padding: var(--space-md); border-radius: var(--rounded);">
+              <strong style="color: var(--primary);">3. Destino al Comercio Exterior (≥50%):</strong>
+              <p style="font-size: 0.9rem; margin-top: 0.25rem;">Al menos la mitad del recurso extraído se destina a la exportación para solventar el metabolismo de otros países.</p>
+            </div>
+          </div>
+          <p style="font-size: 0.88rem; color: var(--secondary); margin-top: var(--space-md); margin-bottom: 0;">
+            <em>Implicancia crucial:</em> La cantera comunitaria de arena para viviendas locales o el huerto campesino de maíz no son extractivismo. La denuncia del extractivismo no se opone a la agricultura ni a la minería en general, sino a este modo particular de subordinación globalizada.
+          </p>
+        </div>
+
+        <!-- Comparative Table of 4 Generations of Extractivism -->
+        <div class="prose-section">
+          <h3>Tabla Comparativa: Las Cuatro Generaciones de Extractivismo (Eduardo Gudynas)</h3>
+          <p>
+            A lo largo de la historia de América Latina, los modos de apropiación no han evolucionado de forma lineal pacífica, sino profundizando la desconexión ecológica y deteriorando el balance entre energía invertida y recurso obtenido:
+          </p>
+        </div>
+
+        <div class="table-container">
+          <table class="custom-table" aria-label="Tabla de las cuatro generaciones de extractivismo">
+            <thead>
+              <tr>
+                <th style="min-width: 140px;">Generación &amp; Época</th>
+                <th style="min-width: 170px;">Tecnología &amp; Fuerza Motriz</th>
+                <th style="min-width: 180px;">Sectores Clave &amp; Escala</th>
+                <th style="min-width: 180px;">Intensidad de Insumos</th>
+                <th style="min-width: 200px;">Impacto Metabólico &amp; Mochila</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <span class="gen-badge">1ª Generación</span><br>
+                  <strong style="font-size: 0.95rem;">Colonial &amp; Repúblicas Tempranas</strong><br>
+                  <span style="font-size: 0.75rem; color: var(--secondary);">Siglos XVI – mediados XIX</span>
+                </td>
+                <td>
+                  <strong>Fuerza humana y animal</strong>.<br>
+                  Pico, pala, socavón tradicional, tracción a sangre (mulas/llamas), molinos hidráulicos rústicos.
+                </td>
+                <td>
+                  Minas de plata y oro de alta ley (Potosí, Zacatecas, Minas Gerais). Plantaciones de caña con esclavitud.
+                </td>
+                <td>
+                  Bajo consumo de energía fósil; uso artesanal de azogue (mercurio) para amalgamar metales preciosos.
+                </td>
+                <td>
+                  Extracción de alta ley mineral con volumen físico acotado pero con inmenso costo en vidas indígenas y africanas (mita colonial).
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="gen-badge">2ª Generación</span><br>
+                  <strong style="font-size: 0.95rem;">Revolución Industrial</strong><br>
+                  <span style="font-size: 0.75rem; color: var(--secondary);">Mediados s. XIX – mediados s. XX</span>
+                </td>
+                <td>
+                  <strong>Máquinas de vapor y combustión interna</strong>.<br>
+                  Dinamita, perforación rotatoria para primeros pozos petroleros, tendido de ferrocarriles mineros a puertos.
+                </td>
+                <td>
+                  Salitre y cobre en Chile; guano en Perú; primeros booms petroleros en México y Venezuela; caucho y café.
+                </td>
+                <td>
+                  Aumento de agua y energía fósil (carbón/vapor); procesos hidrometalúrgicos y uso temprano de cianuro.
+                </td>
+                <td>
+                  Aparición de las <em>bulk commodities</em> (mercancías a granel). Se multiplican las toneladas movilizadas desde el interior hacia ultramar.
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="gen-badge active-gen">3ª Generación</span><br>
+                  <strong style="font-size: 0.95rem;">Megaminería &amp; Transgénicos</strong><br>
+                  <span style="font-size: 0.75rem; color: var(--primary-container);">Último cuarto s. XX – s. XXI (Vigente)</span>
+                </td>
+                <td>
+                  <strong>Megamaquinaria y Biotecnología</strong>.<br>
+                  Palas de 100 toneladas, camiones gigantes, plataformas offshore profundas (300–1.500 m), semillas OGM y glifosato.
+                </td>
+                <td>
+                  Megaminería a cielo abierto (Chuquicamata, Carajás, Yanacocha). Monocultivo de soja (Cono Sur: >50M ton Argentina).
+                </td>
+                <td>
+                  Gasto colosal de agua dulce e hidrocarburos. Desechos mineros (relaves y escombreras) que multiplican por 100 el mineral útil.
+                </td>
+                <td>
+                  Remoción de montañas enteras (>1M ton/año, >1.000 ha). La «mochila ecológica» pulveriza ecosistemas completos y contamina cuencas.
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <span class="gen-badge" style="background: #fde8e8; color: var(--error);">4ª Generación</span><br>
+                  <strong style="font-size: 0.95rem;">Fronteras No Convencionales</strong><br>
+                  <span style="font-size: 0.75rem; color: var(--error);">Siglo XXI (Expansión Crítica)</span>
+                </td>
+                <td>
+                  <strong>Fractura Hidráulica (Fracking) y Ultra-profundidad</strong>.<br>
+                  Inyección forzada a alta presión de agua con cócteles químicos tóxicos, micro-sismos inducidos, minería submarina / pre-sal.
+                </td>
+                <td>
+                  Gas y petróleo de esquisto (Vaca Muerta en Neuquén, Argentina); arenas bituminosas; pozos marinos a >1.500 m de profundidad.
+                </td>
+                <td>
+                  Intensidad hídrica y química extrema. Millones de litros de agua dulce sacrificados irrevocablemente por pozo de fracking.
+                </td>
+                <td>
+                  <strong>Colapso del balance termodinámico:</strong> Retorno energético (EROI) desplomado entre 2:1 y 1:1 («Precipicio Energético»).
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Interactive Mochila Ecológica (MIPS) Simulator -->
+        <div class="interactive-workbench">
+          <div class="workbench-header">
+            <span class="kicker-tag">Calculadora Científica Biofísica</span>
+            <h3>Simulador de Mochila Ecológica (MIPS - Material Input Per Service Unit)</h3>
+            <p>
+              Cuando las estadísticas oficiales anuncian récords de «producción» minera, ocultan la remoción real de la corteza terrestre. Basándose en los coeficientes del Wuppertal Institut (Lettenmeier et al.) citados por Eduardo Gudynas, calcule la masa geológica total removida y su ecotoxicidad:
+            </p>
+          </div>
+
+          <div class="workbench-grid">
+            <div class="workbench-controls">
+              <div class="control-group">
+                <label class="control-label" for="mips-commodity-select">Seleccione la Mercancía Primaria:</label>
+                <select id="mips-commodity-select" class="select-field" onchange="calculateMips()">
+                  <option value="plata" selected>Plata refinada (Mochila: 7.500 ton roca / ton plata)</option>
+                  <option value="cobre">Cobre de mina (Mochila: 348 ton roca / ton cobre)</option>
+                  <option value="plomo">Plomo de mina (Mochila: 15 ton roca / ton plomo)</option>
+                  <option value="oro">Oro refinado (Mochila: ~300.000 ton roca / ton oro)</option>
+                  <option value="soja">Soja de exportación (Erosión y suelo degradado ~3 ton / ton)</option>
+                </select>
+              </div>
+
+              <div class="control-group">
+                <label class="control-label" for="mips-volume-slider">Volumen Comercial Exportado (Toneladas Métricas):</label>
+                <div class="range-slider-wrapper">
+                  <input type="range" id="mips-volume-slider" class="range-slider" min="1" max="5000" value="250" oninput="syncMipsFromSlider(this.value)">
+                  <input type="number" id="mips-volume-num" class="number-sync-input" min="1" max="5000" value="250" oninput="syncMipsFromNumber(this.value)">
+                </div>
+              </div>
+
+              <div style="background: var(--surface-container); padding: var(--space-md); border-radius: var(--rounded); margin-top: var(--space-md);">
+                <span class="card-meta-tag">Referencia Empírica (Gudynas 2015)</span>
+                <p style="font-size: 0.85rem; margin: 0; color: var(--on-surface-variant);" id="mips-footnote">
+                  Bolivia exportó 5.900 toneladas de plata entre 2006 y 2011, lo que implicó pulverizar más de 44 millones de toneladas de rocas andinas.
+                </p>
+              </div>
+            </div>
+
+            <div class="results-display-box" id="mips-results-box">
+              <span class="card-meta-tag">Balance Físico del Ecosistema</span>
+              
+              <div class="metric-row">
+                <span class="metric-name">Producto Comercial Exportado:</span>
+                <span class="metric-value-medium" id="mips-out-clean">250 t</span>
+              </div>
+
+              <div class="metric-row">
+                <div>
+                  <span class="metric-name">Masa Geológica Total Removida:</span>
+                  <div style="font-size: 0.8rem; color: var(--secondary);">(Mineral comercial + Mochila de estériles y relaves)</div>
+                </div>
+                <div class="metric-value-huge" id="mips-out-total">1.875.000 t</div>
+              </div>
+
+              <div class="metric-row">
+                <span class="metric-name">Índice de Ecotoxicidad Relativa (UNEP 2010):</span>
+                <span class="metric-value-medium" id="mips-out-toxic">Moderada / Severa</span>
+              </div>
+
+              <div id="mips-alert-badge" class="status-alert-pill danger">
+                <i data-lucide="alert-triangle" style="width: 14px; height: 14px;"></i>
+                <span id="mips-alert-text">Generación masiva de drenaje ácido de roca y residuos lixiviados</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- TAB PANEL 3: ESTRUCTURAS POLÍTICAS, EROI & EL PRECIPICIO ENERGÉTICO -->
+      <!-- =================================================================== -->
+      <section id="panel-3" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-3">
+        
+        <article class="prose-section">
+          <h2>3. Estructuras Económicas Contemporáneas, Enclaves y el Precipicio Energético</h2>
+          <p class="lead-paragraph">
+            Uno de los engaños discursivos más extendidos por el Banco Mundial, las corporaciones y los ministerios de finanzas es calificar al extractivismo como una «industria». Eduardo Gudynas desenmascara este abuso: la simple extracción no es manufactura.
+          </p>
+          <p>
+            Una industria toma materias primas, las procesa, transforma y ensambla en complejas redes productivas incorporando empleo calificado y valor agregado nacional. Los extractivismos son <strong>economías de enclave</strong>: apéndices territoriales fuertemente militarizados, que se conectan de manera directa con puertos de ultramar para alimentar las cadenas manufactureras en Asia, Europa o Norteamérica, dejando en el territorio pasivos ambientales imborrables y empleo precario.
+          </p>
+        </article>
+
+        <!-- The 2 Fallacies Grid -->
+        <div class="card-grid-2">
+          <div class="loam-card">
+            <span class="card-meta-tag">Arquitectura Jurídica del Despojo</span>
+            <h4>La Ficción del «Suelo vs. Subsuelo»</h4>
+            <p>
+              Para sortear los derechos territoriales de comunidades campesinas e indígenas, los Estados apelan a una doctrina legal falaz: <em>«El suelo pertenece a los propietarios, pero el subsuelo pertenece a la nación»</em> (Joan Martínez Alier).
+            </p>
+            <p>
+              Esta abstracción jurídica ignora la física elemental: es materialmente imposible cavar un tajo a cielo abierto de 1.250 metros de profundidad o fracturar formaciones geológicas con fracking sin arrasar, perforar y contaminar de forma irreversible el suelo superficial, los bosques y los acuíferos comunitarios.
+            </p>
+          </div>
+
+          <div class="loam-card">
+            <span class="card-meta-tag">Régimen Político • Eduardo Gudynas</span>
+            <h4>El «Estado Compensador» y la Trampa Progresista</h4>
+            <p>
+              Tanto los gobiernos conservadores y neoliberales como los regímenes nacional-populares o progresistas («nac-pop») han convergido en el extractivismo. Mientras la derecha reprime tildando la protesta de «radical», el progresismo la criminaliza calificándola de «infantil» o «funcional a la derecha».
+            </p>
+            <p>
+              El Estado deviene en un <strong>Estado Compensador</strong>: captura una porción de las rentas extractivistas para repartir transferencias monetarias condicionadas, subordinando a los movimientos sociales y reduciendo la noción de justicia social a una indemnización en efectivo que legitima la mutilación territorial.
+            </p>
+          </div>
+        </div>
+
+        <!-- The Energy Cliff & EROI Section -->
+        <div class="prose-section">
+          <h3>El EROI y el «Precipicio Energético» de los Hidrocarburos</h3>
+          <p>
+            El rendimiento energético de la civilización moderna está medido por el <strong>EROI</strong> (<em>Energy Return on Investment</em> o Tasa de Retorno Energético): el cociente entre la energía útil que se entrega a la sociedad y la energía que debe quemarse para explorar, perforar, refinar y transportar dicho recurso.
+          </p>
+          <p>
+            En los viejos yacimientos petroleros de inicios del siglo XX en Estados Unidos, el EROI era de <strong>100:1 o 50:1</strong>: con solo un barril invertido se extraían 99 barriles libres para construir escuelas, ferrocarriles, hospitales y ciudades. Sin embargo, como ilustran Lambert et al. (2013) y Eduardo Gudynas (2015), los yacimientos fáciles y de alta calidad se agotaron.
+          </p>
+        </div>
+
+        <!-- EROI Interactive Workbench & Chart -->
+        <div class="interactive-workbench">
+          <div class="workbench-header">
+            <span class="kicker-tag">Modelo Termodinámico de Lambert, Hall &amp; Gudynas</span>
+            <h3>Explorador del Precipicio Energético: EROI vs. Energía Neta Social</h3>
+            <p>
+              Ajuste el valor de retorno energético (EROI) para observar cómo la energía disponible para el sostén de la sociedad colapsa violentamente cuando el EROI desciende de 10:1 hacia la relación 1:1:
+            </p>
+          </div>
+
+          <div class="workbench-grid">
+            <div class="workbench-controls">
+              <div class="control-group">
+                <label class="control-label" for="eroi-slider">Tasa de Retorno Energético (EROI : 1):</label>
+                <div class="range-slider-wrapper">
+                  <input type="range" id="eroi-slider" class="range-slider" min="1.1" max="50" step="0.5" value="15" oninput="syncEroiFromSlider(this.value)">
+                  <input type="number" id="eroi-num" class="number-sync-input" min="1.1" max="50" step="0.5" value="15" oninput="syncEroiFromNumber(this.value)">
+                </div>
+              </div>
+
+              <!-- Presets -->
+              <div class="filter-btn-group" style="margin-top: var(--space-md);">
+                <button class="filter-btn" onclick="setEroiPreset(50)">Petróleo Histórico 1930 (50:1)</button>
+                <button class="filter-btn" onclick="setEroiPreset(18)">Crudo Convencional 2005 (18:1)</button>
+                <button class="filter-btn" onclick="setEroiPreset(5)">Umbral Civilizatorio Mínimo (5:1)</button>
+                <button class="filter-btn" onclick="setEroiPreset(2)">Fracking / Arenas Bituminosas (2:1)</button>
+              </div>
+
+              <div class="results-display-box" style="margin-top: var(--space-lg);">
+                <span class="card-meta-tag">Balance de la Ecuación Termodinámica</span>
+                <div class="metric-row">
+                  <span class="metric-name">Energía Disponible para Consumo Social:</span>
+                  <span class="metric-value-huge" id="eroi-net-energy-val">93.3%</span>
+                </div>
+                <div class="metric-row">
+                  <span class="metric-name">Energía Disipada en Extraer &amp; Procesar:</span>
+                  <span class="metric-value-medium" id="eroi-sunk-energy-val">6.7%</span>
+                </div>
+                <div id="eroi-diagnosis-pill" class="status-alert-pill safe">
+                  <i data-lucide="check-circle" style="width: 14px; height: 14px;"></i>
+                  <span id="eroi-diagnosis-text">Margen energético suficiente para sostener servicios sociales</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- EROI Canvas / Chart Container -->
+            <div class="chart-wrapper" style="margin: 0;">
+              <span class="card-meta-tag">Curva de la Energía Neta (The Energy Cliff)</span>
+              <div class="chart-canvas-container" style="min-height: 280px;">
+                <canvas id="eroiChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="highlight-leaf-card">
+          <h4>La Trampa del Fracking de Cuarta Generación</h4>
+          <p>
+            En los hidrocarburos no convencionales (el gas y petróleo de esquisto en Vaca Muerta, Argentina, o las arenas bituminosas de Canadá), el EROI cae a una relación agónica de <strong>2:1 o 1.5:1</strong>. Esto significa que por cada dos barriles de energía extraídos, ¡más de un barril entero debe consumirse en bombear millones de litros de agua, transportar camiones de arena e inyectar químicos a alta presión! Es un subsidio económico y ambiental ciego a un modelo termodinámicamente inviable.
+          </p>
+        </div>
+
+      </section>
+
+      <!-- =================================================================== -->
+      <!-- TAB PANEL 4: DEUDA ECOLÓGICA Y TRANSICIONES POST-EXTRACTIVISTAS     -->
+      <!-- =================================================================== -->
+      <section id="panel-4" class="tab-panel" role="tabpanel" aria-labelledby="tab-btn-4">
+        
+        <article class="prose-section">
+          <h2>4. Intercambio Desigual, Deuda Ecológica y Horizontes Post-extractivistas</h2>
+          <p class="lead-paragraph">
+            América Latina atraviesa una asimetría estructural denunciada por la Ecología Política: la coexistencia del <strong>déficit comercial en divisas</strong> con un <strong>déficit físico permanente</strong>.
+          </p>
+          <p>
+            Como demostró Mario Pérez Rincón (2006) y confirman Vallejo et al. (2014), rige la despiadada «Regla de San Garabato: compre caro y venda barato». Sudamérica exporta tres a cinco veces más toneladas físicas que las que importa, agotando sus suelos, acuíferos y montañas para adquirir bienes industriales foráneos de alto valor financiero. Cuando el auge de precios de las materias primas se enfría («el contagio chino»), los países latinoamericanos caen en déficits fiscales brutales y se endeudan financieramente para pagar sus importaciones.
+          </p>
+        </article>
+
+        <!-- Biophysical vs Monetary Chart -->
+        <div class="chart-wrapper">
+          <div style="margin-bottom: var(--space-md);">
+            <span class="kicker-tag">Evidencia Empírica de Sudamérica</span>
+            <h3 style="font-family: var(--font-headline); margin: 0 0 var(--space-xs) 0;">La Brecha del Metabolismo Sudamericano: Toneladas Físicas vs. Precios</h3>
+            <p style="font-size: 0.9rem; color: var(--on-surface-variant); margin: 0;">
+              Comparación conceptual entre la masa física transferida al exterior (déficit físico) frente a la vulnerabilidad del saldo de cuenta corriente:
+            </p>
+          </div>
+          <div class="chart-canvas-container">
+            <canvas id="tradeMetabolismChart"></canvas>
+          </div>
+        </div>
+
+        <!-- The Concept of Ecological Debt -->
+        <div class="prose-section">
+          <h3>La Deuda Ecológica: Quién le Debe a Quién</h3>
+          <p>
+            El concepto de <strong>Deuda Ecológica</strong>, acuñado en América Latina en la década de 1990 (Robleto y Marcelo 1992, Joan Martínez Alier), subvierte radicalmente las relaciones morales y financieras de poder:
+          </p>
+          <ul style="padding-left: var(--space-lg); margin-bottom: var(--space-lg);">
+            <li style="margin-bottom: var(--space-xs);">
+              <strong>Deuda de Carbono:</strong> El Norte global ha ocupado de manera histórica y desproporcionada los sumideros globales de la biosfera (océanos y atmósfera) para depositar sus emisiones industriales de CO₂, dejando sin espacio ecológico al Sur (Agarwal y Narain 1991).
+            </li>
+            <li style="margin-bottom: var(--space-xs);">
+              <strong>Pasivos Ambientales No Pagados:</strong> El drenaje ácido de minas clausuradas, la contaminación con mercurio y cianuro en ríos amazónicos, y los millones de hectáreas degradadas por agro-tóxicos en Argentina y Brasil jamás han sido saldados por las corporaciones transnacionales.
+            </li>
+            <li style="margin-bottom: var(--space-xs);">
+              <strong>Biopiratería y Saqueo Genético:</strong> La apropiación y patentamiento por laboratorios del Norte de semillas campesinas y plantas medicinales milenarias sin compensación alguna a los pueblos indígenas.
+            </li>
+          </ul>
+          <p>
+            Si se calcularan monetariamente estos pasivos biofísicos históricos, la supuesta «deuda externa financiera» que los organismos multilaterales reclaman al Sur global quedaría reducida a una insignificante fracción. La verdadera acreedora histórica y ecológica es América Latina y el Sur del planeta.
+          </p>
+        </div>
+
+        <!-- Interactive Lexicon of Socio-Environmental Justice -->
+        <div class="interactive-workbench">
+          <div class="workbench-header">
+            <span class="kicker-tag">Vocabulario de las Luchas (Martínez Alier 2015)</span>
+            <h3>Glosario Interactivo de la Justicia Socio-Ambiental</h3>
+            <p>
+              Los movimientos populares de justicia ambiental en América Latina han creado un poderoso arsenal conceptual fuera de las academias tradicionales. Explore o busque términos para descubrir su origen, definición y autores clave:
+            </p>
+          </div>
+
+          <!-- Search & Filter Controls -->
+          <div class="search-bar-wrapper">
+            <i data-lucide="search" class="search-icon-pos" style="width: 18px; height: 18px;"></i>
+            <input type="text" id="lexicon-search-input" class="search-input" placeholder="Buscar concepto (ej. racismo ambiental, Buen Vivir, Yasuní, pasivos...)" oninput="filterLexicon()">
+          </div>
+
+          <div class="filter-btn-group" id="lexicon-cat-filters">
+            <button class="filter-btn active" onclick="setLexiconCategory('all', this)">Todos los Términos</button>
+            <button class="filter-btn" onclick="setLexiconCategory('resistencia', this)">Vocabularios de Resistencia</button>
+            <button class="filter-btn" onclick="setLexiconCategory('estructural', this)">Economía &amp; Metabolismo</button>
+            <button class="filter-btn" onclick="setLexiconCategory('derechos', this)">Derechos &amp; Cosmogonías</button>
+          </div>
+
+          <!-- Lexicon Cards Container -->
+          <div class="card-grid-3" id="lexicon-cards-grid">
+            <!-- Populated dynamically via JS -->
+          </div>
+        </div>
+
+        <!-- Pathways to Post-Extractivist Transitions -->
+        <div class="prose-section">
+          <h3>Senderos Hacia las Transiciones Post-extractivistas</h3>
+          <p>
+            Frente al chantaje dominante que sostiene que «sin extractivismo no hay desarrollo ni programas sociales», autores como Eduardo Gudynas, Alberto Acosta y Maristella Svampa proponen un programa urgente de <strong>transiciones post-extractivistas</strong> articulado en fases consecutivas:
+          </p>
+        </div>
+
+        <div class="card-grid-2">
+          <div class="loam-card">
+            <span class="card-meta-tag">Fase 1 • Medidas de Emergencia</span>
+            <h4>Moratoria y Erradicación de la Cuarta Generación</h4>
+            <p>
+              Prohibición absoluta e inmediata de la fractura hidráulica (fracking), de la megaminería en cabeceras de cuenca y glaciares, y de la explotación de crudo en áreas biológicamente intangibles como el Yasuní amazónico. Desactivar el drenaje de divisas deteniendo proyectos depredadores sin viabilidad energética.
+            </p>
+          </div>
+
+          <div class="loam-card">
+            <span class="card-meta-tag">Fase 2 • Desmercantilización</span>
+            <h4>Reforma Tributaria y Soberanía Biocéntrica</h4>
+            <p>
+              Internalización estricta de costos ecológicos mediante impuestos de agotamiento de capital natural. Orientar la producción agraria hacia la agroecología y la soberanía alimentaria campesina («la agricultura campesina enfría el planeta»), abandonando los desiertos verdes del monocultivo sojero de exportación.
+            </p>
+          </div>
+
+          <div class="loam-card">
+            <span class="card-meta-tag">Fase 3 • Descentralización Política</span>
+            <h4>Radicalización Democrática y Consultas Vinculantes</h4>
+            <p>
+              Desmontar el hiperpresidencialismo del «Estado Compensador». Reconocer el carácter jurídicamente vinculante de las consultas y referendos comunitarios (como en Tambogrande, Esquel o Piedras), consagrando el consentimiento previo, libre e informado (Convenio 169 de la OIT).
+            </p>
+          </div>
+
+          <div class="loam-card is-leaf-highlight">
+            <span class="card-meta-tag" style="color: var(--on-primary-container);">Fase 4 • Revolución Ética</span>
+            <h4>Derechos de la Naturaleza y Buen Vivir (Sumak Kawsay)</h4>
+            <p>
+              Ruptura ontológica con el antropocentrismo ilustrado. Reconocimiento de la Naturaleza (Pachamama) como sujeto intrínseco de derechos constitucionales (tal como se plasmó en el artículo 71 de la Constitución del Ecuador de 2008), transitando de la acumulación material infinita a la plenitud comunitaria del Buen Vivir.
+            </p>
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+    <!-- Editorial Footer -->
+    <footer class="editorial-footer">
+      <div class="footer-sources-box">
+        <h4>Fuentes Académicas y Marco de Referencia</h4>
+        <ul>
+          <li><strong>Gudynas, Eduardo (2015):</strong> <em>Extractivismos: Ecología, economía y política de un modo de entender el desarrollo y la Naturaleza.</em> CEDIB / CLAES, Cochabamba, Bolivia.</li>
+          <li><strong>Martínez Alier, Joan (2004):</strong> «Los conflictos ecológico-distributivos y los indicadores de sustentabilidad». <em>Revista Iberoamericana de Economía Ecológica</em>, Vol. 1, pp. 21-30.</li>
+          <li><strong>Martínez Alier, Joan (2015):</strong> «Ecología política del extractivismo y justicia socio-ambiental». <em>Interdisciplina</em>, UNAM / CLACSO, Vol. 3, Nº 7, pp. 57-73.</li>
+          <li><strong>Machado Aráoz, Horacio (2015):</strong> «Ecología política de los regímenes extractivistas: de reconfiguraciones imperiales y re-existencias decoloniales». CONICET / Redalyc.</li>
+          <li><strong>Delgado Ramos, Gian Carlo (2016):</strong> «Ecología política del extractivismo y justicia socio-ambiental». CEIICH UNAM.</li>
+          <li><strong>Proyecto EJOLT (2011–2015):</strong> Environmental Justice Organizations, Liabilities and Trade / Atlas Global de Justicia Ambiental (EJAtlas).</li>
+        </ul>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--space-md); font-family: var(--font-label); font-size: 0.8rem;">
+        <span>Publicación interactiva basada en investigación de Ecología Política Latinoamericana.</span>
+        <span>Noviembre de 2026 • Acceso Abierto Crítico</span>
+      </div>
+    </footer>
+
+  </div>
+
+  <api-shim></api-shim>
+
+  <script>
+    /* ==========================================================================
+       DATOS Y MODELOS DEFENSIVOS (JS)
+       ========================================================================== */
+
+    // Conflictos en Commodity Chains (Tab 1)
+    const conflictsData = [
+      {
+        id: `conf-1`,
+        category: `extraccion`,
+        categoryLabel: `1. Extracción`,
+        title: `Conflictos Mineros a Gran Escala`,
+        caseStudy: `Tambogrande (Perú) & Conga / Intag (Ecuador)`,
+        description: `Ocupación de cuencas de cabecera, generación de drenaje ácido de roca, contaminación con cianuro o mercurio y consumo masivo de agua dulce que seca valles agrícolas.`,
+        vocabulary: `El agua vale más que el oro / Consulta popular vinculante`
+      },
+      {
+        id: `conf-2`,
+        category: `extraccion`,
+        categoryLabel: `1. Extracción`,
+        title: `Apropiación Petrolera & Gasífera`,
+        caseStudy: `Amazonía Norte (Texaco-Chevron en Ecuador) & Delta del Níger (Ogoni / Shell)`,
+        description: `Vertido de aguas saladas de formación, quema incesante de gas (flaring), apertura de carreteras que inducen deforestación y violación de territorios ancestrales.`,
+        vocabulary: `Ogonización / Yasunización / Dejar el crudo bajo tierra`
+      },
+      {
+        id: `conf-3`,
+        category: `extraccion`,
+        categoryLabel: `1. Extracción`,
+        title: `Monocultivos Agroindustriales`,
+        caseStudy: `La República Unida de la Soja (Argentina, Brasil, Paraguay, Bolivia)`,
+        description: `Avance sobre bosques nativos y el Cerrado, desposesión de comunidades campesinas y fumigaciones masivas con glifosato y otros agrotóxicos que disparan el cáncer.`,
+        vocabulary: `Paren de Fumigar / Epidemiología Popular / Desiertos Verdes`
+      },
+      {
+        id: `conf-4`,
+        category: `extraccion`,
+        categoryLabel: `1. Extracción`,
+        title: `Defensa de los Manglares y Acuicultura`,
+        caseStudy: `Costas del Pacífico (Ecuador, Honduras, Filipinas)`,
+        description: `Tala de manglares protectores de línea costera para instalar piscinas de camarón de exportación, aniquilando el sustento de concheras y pescadores ancestrales.`,
+        vocabulary: `Justicia Ambiental Comunitaria / Pueblos del Ecosistema`
+      },
+      {
+        id: `conf-5`,
+        category: `extraccion`,
+        categoryLabel: `1. Extracción`,
+        title: `Biopiratería y Propiedad Intelectual`,
+        caseStudy: `Patentes sobre Ayahuasca, Quinua, Arroz Basmati o Neem`,
+        description: `Apropiación mercantil de recursos biológicos, agrícolas y medicinales sin consentimiento ni beneficio para comunidades que los conservaron durante siglos.`,
+        vocabulary: `Biopiratería (Pat Mooney 1993) / Semillas libres`
+      },
+      {
+        id: `conf-6`,
+        category: `extraccion`,
+        categoryLabel: `1. Extracción`,
+        title: `Megarepresas y Acaparamiento Hídrico`,
+        caseStudy: `Belo Monte (Brasil), Represas del Río Narmada (India), Coca Codo Sinclair`,
+        description: `Inundación forzada de valles habitados, alteración del pulso biológico de los ríos y desviación de caudales para beneficio de grandes fundiciones mineras.`,
+        vocabulary: `Atingidos por Barragens / Justicia Hídrica / Río Libre`
+      },
+      {
+        id: `conf-7`,
+        category: `transporte`,
+        categoryLabel: `2. Transporte`,
+        title: `Derrames Marítimos y Oleoductos`,
+        caseStudy: `Oleoducto Norperuano / Derrame del Prestige / Gasoductos IIRSA`,
+        description: `Fugas recurrentes por obsolescencia o sabotajes en tuberías que atraviesan selvas tropicales y derrames de buques cisterna en rutas de navegación intensiva.`,
+        vocabulary: `Responsabilidad Civil y Penal Corporativa / Alien Tort Claims Act (ATCA)`
+      },
+      {
+        id: `conf-8`,
+        category: `transporte`,
+        categoryLabel: `2. Transporte`,
+        title: `Corredores de Exportación e Hidrovías`,
+        caseStudy: `Justiça nos Trilhos (Carajás, Brasil) & Hidrovía Paraguay-Paraná`,
+        description: `Tendido de vías férreas exclusivas y dragado de ríos para acelerar la salida de minerales y granos, partiendo en dos comunidades y destruyendo humedales.`,
+        vocabulary: `Infraestructura de Enclave / Grands Projets Inutiles`
+      },
+      {
+        id: `conf-9`,
+        category: `residuos`,
+        categoryLabel: `3. Residuos`,
+        title: `Luchas Tóxicas y Racismo Ambiental`,
+        caseStudy: `Love Canal & Warren County (EE.UU.) / Minería en Greengair (Escocia)`,
+        description: `Emplazamiento sistemático de vertederos de metales pesados, incineradores químicos o relaves en barrios con alta proporción de población afro, indígena o de bajos ingresos.`,
+        vocabulary: `Racismo Ambiental (Robert Bullard) / Zonas de Sacrificio`
+      },
+      {
+        id: `conf-10`,
+        category: `residuos`,
+        categoryLabel: `3. Residuos`,
+        title: `Imperialismo Tóxico y Basura Global`,
+        caseStudy: `Desguace naval en Alang (Gujarat, India) / Residuos electrónicos en Ghana`,
+        description: `Exportación ilegal de chatarra naval contaminada con asbesto y mercurio o desechos informáticos desde países ricos hacia periferias desreguladas.`,
+        vocabulary: `Imperialismo Tóxico (Greenpeace) / Convenio de Basilea`
+      },
+      {
+        id: `conf-11`,
+        category: `residuos`,
+        categoryLabel: `3. Residuos`,
+        title: `Desigualdad en Sumideros de Carbono`,
+        caseStudy: `Deuda de Carbono del Norte Global frente a la Vulnerabilidad del Sur`,
+        description: `Ocupación excluyente de la atmósfera y océanos por el 20% más rico de la humanidad, mientras las catástrofes climáticas azotan a islas y zonas rurales periféricas.`,
+        vocabulary: `Justicia Climática / Contracción y Convergencia (Agarwal & Narain)`
+      },
+      {
+        id: `conf-12`,
+        category: `residuos`,
+        categoryLabel: `3. Residuos`,
+        title: `Contaminación Transfronteriza`,
+        caseStudy: `Lluvia Ácida en Europa del Norte / Ensayos Nucleares en el Pacífico`,
+        description: `Dispersión de emisiones de dióxido de azufre o radiactividad más allá de las fronteras soberanas del país contaminante, eludiendo cualquier compensación.`,
+        vocabulary: `Ecocidio Transfronterizo / Pasivos Globales`
+      }
+    ];
+
+    // Glosario de Justicia Socio-Ambiental (Tab 4)
+    const lexiconData = [
+      {
+        term: `Justicia Ambiental`,
+        category: `resistencia`,
+        author: `Robert Bullard (1990) / Movimiento en EE.UU. & Brasil`,
+        definition: `Movimiento social y marco conceptual que denuncia la imposición desproporcionada de cargas ambientales tóxicas a colectivos oprimidos, extendido hoy universalmente como derecho al territorio y la salud digna.`
+      },
+      {
+        term: `Racismo Ambiental`,
+        category: `resistencia`,
+        author: `Benjamín Chavis & Robert Bullard (1982)`,
+        definition: `Discriminación institucionalizada manifestada en la ubicación deliberada de vertederos de residuos peligrosos e industrias contaminantes en zonas habitadas por minorías étnicas o pueblos originarios.`
+      },
+      {
+        term: `Epidemiología Popular`,
+        category: `resistencia`,
+        author: `Phil Brown (1997) / Madres de Ituzaingó (Córdoba, Argentina)`,
+        definition: `Proceso mediante el cual vecinos y comunidades sin formación médica formal recopilan estadísticas de salud, morbilidad de cáncer y abortos espontáneos para evidenciar el daño por agrotóxicos o metales.`
+      },
+      {
+        term: `Paren de Fumigar`,
+        category: `resistencia`,
+        author: `Médicos de Pueblos Fumigados & Andrés Carrasco (Argentina)`,
+        definition: `Grito de lucha y red comunitaria nacida en el Cono Sur frente al rociado masivo de glifosato y plaguicidas sobre escuelas rurales y poblaciones contiguas a los monocultivos de soja transgénica.`
+      },
+      {
+        term: `Zonas de Sacrificio`,
+        category: `estructural`,
+        author: `Steve Lerner (2010)`,
+        definition: `Territorios hiperconcentrados de industrias pesadas, fundiciones o termoeléctricas donde las normas de salud y vida humana son deliberadamente flexibilizadas para maximizar el lucro de exportación.`
+      },
+      {
+        term: `Deuda Ecológica`,
+        category: `estructural`,
+        author: `Robleto & Marcelo (1992) / Joan Martínez Alier`,
+        definition: `La deuda moral, termodinámica y material que los países industrializados tienen con el Sur global por el saqueo de recursos a precios viles, los pasivos ambientales históricos y la deuda de carbono.`
+      },
+      {
+        term: `Biopiratería`,
+        category: `estructural`,
+        author: `Pat Mooney (RAFI-ETC, 1993)`,
+        definition: `Apropiación de material genético, plantas medicinales y saberes botánicos ancestrales por empresas farmacéuticas y biotecnológicas del Norte mediante patentes sin autorización comunitaria.`
+      },
+      {
+        term: `El Agua Vale Más que el Oro`,
+        category: `resistencia`,
+        author: `OCMAL / Asambleas Ciudadanas (Famatina, Esquel, Perú)`,
+        definition: `Lema vertebral del ecologismo popular en la cordillera andina para defender los glaciares y cuencas hídricas frente a los proyectos de megaminería metalífera a cielo abierto.`
+      },
+      {
+        term: `Derechos de la Naturaleza`,
+        category: `derechos`,
+        author: `Constitución del Ecuador (2008, Art. 71) / Alberto Acosta`,
+        definition: `Consagración jurídica de la Naturaleza (Pachamama) como sujeto de derechos inalienables a que se respete integralmente su existencia y el mantenimiento de sus ciclos vitales, superando el antropocentrismo.`
+      },
+      {
+        term: `Buen Vivir / Sumak Kawsay`,
+        category: `derechos`,
+        author: `Cosmovisión Andino-Amazónica / Eduardo Gudynas`,
+        definition: `Paradigma alternativo al desarrollo convencional que busca la armonía comunitaria entre seres humanos y la Naturaleza, desvinculando el bienestar de la acumulación material y el consumo desenfrenado.`
+      },
+      {
+        term: `Ogonización & Yasunización`,
+        category: `resistencia`,
+        author: `Oilwatch Internacional (1997) / Níger & Ecuador`,
+        definition: `Propuesta de moratoria petrolera consistente en dejar los hidrocarburos bajo tierra para preservar la biodiversidad, los pueblos en aislamiento y evitar emisiones de gases de efecto invernadero.`
+      },
+      {
+        term: `Desiertos Verdes`,
+        category: `estructural`,
+        author: `Movimiento sin Tierra (MST, Brasil) / WRM`,
+        definition: `Denuncia contra las inmensas plantaciones uniformes de eucaliptos o pinos para pasta de celulosa, que secan las fuentes de agua, destruyen la biodiversidad y eliminan la vida campesina tradicional.`
+      },
+      {
+        term: `Las Plantaciones No Son Bosques`,
+        category: `resistencia`,
+        author: `Carrere y Lohmann (1996) / World Rainforest Movement`,
+        definition: `Principio ecológico que combate la equiparación interesada que hace la FAO entre monocultivos forestales industriales comerciales y los bosques nativos con alta diversidad biológica y social.`
+      },
+      {
+        term: `Acaparamiento de Tierras (Land Grabbing)`,
+        category: `estructural`,
+        author: `Organización GRAIN (2008)`,
+        definition: `Ola internacional de adquisiciones masivas o arrendamientos a largo plazo de millones de hectáreas en el Sur por corporaciones y fondos soberanos foráneos para asegurarse alimentos o agrocombustibles.`
+      },
+      {
+        term: `Soberanía Alimentaria`,
+        category: `derechos`,
+        author: `La Vía Campesina (1996)`,
+        definition: `El derecho soberano de los pueblos a definir sus propias políticas agrícolas y de alimentación saludable producida de forma agroecológica, frente a la invasión de importaciones subsidiadas.`
+      },
+      {
+        term: `Imperialismo Tóxico`,
+        category: `estructural`,
+        author: `Greenpeace (1988)`,
+        definition: `La práctica de trasladar desechos nucleares, químicos o electrónicos peligrosos desde países altamente industrializados a territorios del Tercer Mundo con regulaciones débiles o corruptas.`
+      },
+      {
+        term: `Atingidos por Barragens`,
+        category: `resistencia`,
+        author: `Movimento dos Atingidos por Barragens (MAB, Brasil)`,
+        definition: `Colectivo y concepto que organiza a las poblaciones forzosamente inundadas, desplazadas o desposeídas de sus tierras por la construcción de grandes represas hidroeléctricas.`
+      },
+      {
+        term: `Post-Extractivismo`,
+        category: `derechos`,
+        author: `Eduardo Gudynas, Alberto Acosta, Maristella Svampa`,
+        definition: `Horizonte teórico-práctico de transformaciones económicas, políticas y ontológicas destinadas a superar progresivamente la dependencia primaria exportadora y restaurar la soberanía territorial.`
+      }
+    ];
+
+    /* ==========================================================================
+       GESTIÓN DE PESTAÑAS (TABS) Y ESTADO
+       ========================================================================== */
+    let currentTab = 1;
+    let eroiChartInstance = null;
+    let tradeChartInstance = null;
+
+    function switchDossierTab(tabIndex) {
+      if (tabIndex < 1 || tabIndex > 4) return;
+      currentTab = tabIndex;
+
+      // Update Tab Buttons
+      for (let i = 1; i <= 4; i++) {
+        const btn = document.getElementById(`tab-btn-${i}`);
+        const panel = document.getElementById(`panel-${i}`);
+        const stripCell = document.getElementById(`strip-step-${i}`);
+
+        if (btn) {
+          const isActive = (i === tabIndex);
+          btn.classList.toggle('active', isActive);
+          btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        }
+
+        if (panel) {
+          panel.classList.toggle('active', i === tabIndex);
+        }
+
+        if (stripCell) {
+          stripCell.classList.toggle('is-active', i === tabIndex);
+        }
+      }
+
+      // Re-trigger Lucide icons for new panel
+      if (window.lucide && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
+      }
+
+      // Render Charts if entering tab 3 or tab 4
+      if (tabIndex === 3) {
+        initOrUpdateEroiChart();
+      } else if (tabIndex === 4) {
+        initOrUpdateTradeChart();
+      }
+    }
+
+    /* ==========================================================================
+       TAB 1: FILTRO DE CONFLICTOS ECOLÓGICO-DISTRIBUTIVOS
+       ========================================================================== */
+    function renderConflicts(filterCategory = 'all') {
+      const container = document.getElementById('conflicts-container');
+      if (!container) return;
+
+      const filtered = (filterCategory === 'all') 
+        ? conflictsData 
+        : conflictsData.filter(c => c.category === filterCategory);
+
+      let html = '';
+      filtered.forEach(item => {
+        html += `
+          <div class="loam-card interactive-hover">
+            <span class="card-meta-tag">${item.categoryLabel}</span>
+            <h4>${item.title}</h4>
+            <p style="font-size: 0.95rem; margin-bottom: 0.4rem;"><strong>Caso:</strong> ${item.caseStudy}</p>
+            <p style="font-size: 0.88rem; color: var(--on-surface-variant); margin-bottom: 0.5rem;">${item.description}</p>
+            <div style="font-family: var(--font-label); font-size: 0.75rem; color: var(--tertiary); background: var(--surface-container); padding: 4px 8px; border-radius: 4px;">
+              Resistencia: ${item.vocabulary}
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      if (window.lucide && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
+      }
+    }
+
+    function filterConflicts(category, btnElement) {
+      if (btnElement) {
+        const parent = btnElement.parentElement;
+        if (parent) {
+          const siblings = parent.querySelectorAll('.filter-btn');
+          siblings.forEach(b => b.classList.remove('active'));
+          btnElement.classList.add('active');
+        }
+      }
+      renderConflicts(category);
+    }
+
+    /* ==========================================================================
+       TAB 2: SIMULADOR DE MOCHILA ECOLÓGICA (MIPS)
+       ========================================================================== */
+    const commodityMipsData = {
+      plata: {
+        ratio: 7500,
+        name: `Plata refinada`,
+        unit: `toneladas de roca/suelo por tonelada`,
+        toxicity: `Muy Alta (Lixiviación con cianuro, drenaje ácido persistente)`,
+        alertText: `Por cada tonelada comercial se destruyen 7.500 t de cerro andino.`,
+        footnote: `Bolivia exportó 5.900 toneladas de plata (2006-2011), requiriendo remover más de 44 millones de toneladas de roca.`
+      },
+      cobre: {
+        ratio: 348,
+        name: `Cobre de mina`,
+        unit: `toneladas de roca por tonelada`,
+        toxicity: `Alta (Generación masiva de relaves y escorias sulfurosas)`,
+        alertText: `Mega-tajos de Chuquicamata y Carajás desplazan centenares de miles de hectáreas.`,
+        footnote: `En la megaminería cuprífera el 99% del material horadado termina como relave o escombrera de descarte.`
+      },
+      plomo: {
+        ratio: 15,
+        name: `Plomo de mina`,
+        unit: `toneladas de roca por tonelada`,
+        toxicity: `Extrema (Saturnismo, neurotoxicidad irreversible en sangre)`,
+        alertText: `Impacto crítico en la salud de niños y trabajadores por polvillo de fundición.`,
+        footnote: `En Cerro de Pasco (Perú), los niños presentan niveles récord de plomo en sangre debido a la cantera a tajo abierto adyacente a sus hogares.`
+      },
+      oro: {
+        ratio: 300000,
+        name: `Oro refinado`,
+        unit: `toneladas de corteza por tonelada`,
+        toxicity: `Extrema (>10.000 veces la ecotoxicidad del cobre, mercurio y cianuro)`,
+        alertText: `Ecotoxicidad abrumadora: 1 gramo de oro requiere triturar más de 1 tonelada de tierra.`,
+        footnote: `El oro extraído sale de la tierra triturando montañas para regresar absurdamente bajo tierra a las bóvedas de bancos centrales.`
+      },
+      soja: {
+        ratio: 3.2,
+        name: `Soja de exportación`,
+        unit: `toneladas de suelo erosionado/degradado por tonelada`,
+        toxicity: `Severa (Fumigación sistemática con glifosato, 2,4-D y pérdida de biodiversidad)`,
+        alertText: `Agotamiento acelerado de nutrientes fósiles en el suelo y deforestación del Cerrado/Chaco.`,
+        footnote: `Argentina y Brasil exportan más de 150 millones de toneladas de soja anuales como grano forrajero hacia China y Europa.`
+      }
+    };
+
+    function syncMipsFromSlider(val) {
+      const numInput = document.getElementById('mips-volume-num');
+      if (numInput) numInput.value = val;
+      calculateMips();
+    }
+
+    function syncMipsFromNumber(val) {
+      const slider = document.getElementById('mips-volume-slider');
+      if (slider) slider.value = val;
+      calculateMips();
+    }
+
+    function calculateMips() {
+      const select = document.getElementById('mips-commodity-select');
+      const numInput = document.getElementById('mips-volume-num');
+      if (!select || !numInput) return;
+
+      const commodityKey = select.value;
+      const tons = parseFloat(numInput.value) || 0;
+      const data = commodityMipsData[commodityKey] || commodityMipsData.plata;
+
+      const totalDisplaced = tons * data.ratio;
+
+      const outClean = document.getElementById('mips-out-clean');
+      const outTotal = document.getElementById('mips-out-total');
+      const outToxic = document.getElementById('mips-out-toxic');
+      const alertText = document.getElementById('mips-alert-text');
+      const footnote = document.getElementById('mips-footnote');
+
+      if (outClean) outClean.textContent = `${tons.toLocaleString('es-ES')} t`;
+      if (outTotal) outTotal.textContent = `${totalDisplaced.toLocaleString('es-ES')} t`;
+      if (outToxic) outToxic.textContent = data.toxicity;
+      if (alertText) alertText.textContent = data.alertText;
+      if (footnote) footnote.textContent = data.footnote;
+    }
+
+    /* ==========================================================================
+       TAB 3: CALCULADORA Y GRÁFICO EROI (PRECIPICIO ENERGÉTICO)
+       ========================================================================== */
+    function syncEroiFromSlider(val) {
+      const numInput = document.getElementById('eroi-num');
+      if (numInput) numInput.value = val;
+      calculateEroi();
+    }
+
+    function syncEroiFromNumber(val) {
+      const slider = document.getElementById('eroi-slider');
+      if (slider) slider.value = val;
+      calculateEroi();
+    }
+
+    function setEroiPreset(val) {
+      const slider = document.getElementById('eroi-slider');
+      const numInput = document.getElementById('eroi-num');
+      if (slider) slider.value = val;
+      if (numInput) numInput.value = val;
+      calculateEroi();
+    }
+
+    function calculateEroi() {
+      const eroiInput = document.getElementById('eroi-num');
+      if (!eroiInput) return;
+
+      const eroi = parseFloat(eroiInput.value) || 1.1;
+      
+      // Ecuación termodinámica de energía neta disponible:
+      // Net Energy % = (1 - 1/EROI) * 100
+      // Sunk Energy % = (1/EROI) * 100
+      const netPct = Math.max(0, Math.min(100, (1 - (1 / eroi)) * 100));
+      const sunkPct = Math.max(0, Math.min(100, 100 - netPct));
+
+      const netEl = document.getElementById('eroi-net-energy-val');
+      const sunkEl = document.getElementById('eroi-sunk-energy-val');
+      const pillEl = document.getElementById('eroi-diagnosis-pill');
+      const textEl = document.getElementById('eroi-diagnosis-text');
+
+      if (netEl) netEl.textContent = `${netPct.toFixed(1)}%`;
+      if (sunkEl) sunkEl.textContent = `${sunkPct.toFixed(1)}%`;
+
+      if (pillEl && textEl) {
+        pillEl.className = 'status-alert-pill';
+        if (eroi >= 15) {
+          pillEl.classList.add('safe');
+          textEl.textContent = `Margen de holgura: alta disponibilidad para sostener infraestructura social.`;
+        } else if (eroi >= 5) {
+          pillEl.classList.add('warning');
+          textEl.textContent = `Tensión metabólica: se acerca al umbral mínimo de supervivencia civilizatoria (3:1 a 5:1).`;
+        } else {
+          pillEl.classList.add('danger');
+          textEl.textContent = `Precipicio Energético: actividad parasitaria. Más de la mitad de la energía se quema en extraer el recurso.`;
+        }
+      }
+
+      // Update highlight in Chart if exists
+      if (eroiChartInstance) {
+        eroiChartInstance.update('none');
+      }
+    }
+
+    function initOrUpdateEroiChart() {
+      const canvas = document.getElementById('eroiChart');
+      if (!canvas) return;
+
+      if (eroiChartInstance) {
+        eroiChartInstance.resize();
+        return;
+      }
+
+      const eroiPoints = [1.1, 1.5, 2, 3, 5, 8, 10, 15, 20, 30, 40, 50];
+      const netValues = eroiPoints.map(e => ((1 - (1 / e)) * 100).toFixed(1));
+
+      const ctx = canvas.getContext('2d');
+      eroiChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: eroiPoints.map(e => `${e}:1`),
+          datasets: [
+            {
+              label: `% Energía Libre para Consumo Social`,
+              data: netValues,
+              borderColor: '#366948',
+              backgroundColor: 'rgba(54, 105, 72, 0.15)',
+              fill: true,
+              tension: 0.35,
+              borderWidth: 3,
+              pointBackgroundColor: '#366948',
+              pointRadius: 4,
+              pointHoverRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              labels: {
+                font: { family: `'Nunito Sans', sans-serif`, size: 12 },
+                color: '#2a302b'
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return ` ${context.parsed.y}% disponible (Gasto: ${(100 - context.parsed.y).toFixed(1)}%)`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              min: 0,
+              max: 100,
+              title: {
+                display: true,
+                text: '% Energía Neta Obtenida',
+                font: { family: `'Geist Mono', monospace`, size: 11 },
+                color: '#4a524b'
+              },
+              grid: { color: 'rgba(203, 197, 184, 0.4)' },
+              ticks: { font: { family: `'Geist Mono', monospace` }, color: '#4a524b' }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Tasa EROI (Barriles extraídos por barril invertido)',
+                font: { family: `'Geist Mono', monospace`, size: 11 },
+                color: '#4a524b'
+              },
+              grid: { display: false },
+              ticks: { font: { family: `'Geist Mono', monospace` }, color: '#4a524b' }
+            }
+          }
+        }
+      });
+    }
+
+    /* ==========================================================================
+       TAB 4: GRÁFICO METABOLISMO COMERCIAL Y GLOSARIO
+       ========================================================================== */
+    function initOrUpdateTradeChart() {
+      const canvas = document.getElementById('tradeMetabolismChart');
+      if (!canvas) return;
+
+      if (tradeChartInstance) {
+        tradeChartInstance.resize();
+        return;
+      }
+
+      const countries = ['Brasil', 'Argentina', 'Chile', 'Colombia', 'Perú', 'Ecuador', 'Uruguay'];
+      const exportTons = [480, 85, 35, 115, 65, 32, 22]; // Millones de toneladas anuales físicas
+      const importTons = [95, 28, 18, 25, 21, 11, 6];   // Millones de toneladas físicas importadas
+
+      const ctx = canvas.getContext('2d');
+      tradeChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: countries,
+          datasets: [
+            {
+              label: 'Exportaciones Físicas (Millones Toneladas)',
+              data: exportTons,
+              backgroundColor: '#8f5822',
+              borderRadius: 6
+            },
+            {
+              label: 'Importaciones Físicas (Millones Toneladas)',
+              data: importTons,
+              backgroundColor: '#4b6b78',
+              borderRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'top',
+              labels: {
+                font: { family: `'Nunito Sans', sans-serif`, size: 12 },
+                color: '#2a302b'
+              }
+            },
+            tooltip: {
+              callbacks: {
+                afterBody: function(contexts) {
+                  return `Déficit físico estructural: Se drenan hasta 4x más materiales que los que ingresan.`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              title: {
+                display: true,
+                text: 'Masa Física (Millones de Toneladas / Año)',
+                font: { family: `'Geist Mono', monospace`, size: 11 },
+                color: '#4a524b'
+              },
+              grid: { color: 'rgba(203, 197, 184, 0.4)' },
+              ticks: { font: { family: `'Geist Mono', monospace` }, color: '#4a524b' }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { font: { family: `'Nunito Sans', sans-serif`, weight: 'bold' }, color: '#2a302b' }
+            }
+          }
+        }
+      });
+    }
+
+    let activeLexiconCategory = 'all';
+
+    function renderLexicon(category = 'all', searchQuery = '') {
+      const container = document.getElementById('lexicon-cards-grid');
+      if (!container) return;
+
+      const q = searchQuery.toLowerCase().trim();
+
+      const filtered = lexiconData.filter(item => {
+        const matchesCategory = (category === 'all' || item.category === category);
+        const matchesQuery = (!q || 
+          item.term.toLowerCase().includes(q) || 
+          item.definition.toLowerCase().includes(q) || 
+          item.author.toLowerCase().includes(q)
+        );
+        return matchesCategory && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div style="grid-column: 1 / -1; padding: var(--space-xl); text-align: center; color: var(--secondary);">
+            <i data-lucide="info" style="width: 28px; height: 28px; margin: 0 auto var(--space-xs) auto; display: block;"></i>
+            No se encontraron términos para la búsqueda «${searchQuery}». Pruebe con palabras como «glifosato», «racismo», «deuda» o «bosque».
+          </div>
+        `;
+      } else {
+        let html = '';
+        filtered.forEach(item => {
+          let badgeColor = 'var(--primary)';
+          if (item.category === 'resistencia') badgeColor = 'var(--tertiary)';
+          if (item.category === 'derechos') badgeColor = 'var(--positive)';
+
+          html += `
+            <div class="loam-card interactive-hover">
+              <span class="card-meta-tag" style="color: ${badgeColor};">${item.category.toUpperCase()}</span>
+              <h4 style="margin-bottom: 0.25rem;">${item.term}</h4>
+              <div style="font-family: var(--font-label); font-size: 0.72rem; color: var(--secondary); margin-bottom: 0.5rem;">
+                ${item.author}
+              </div>
+              <p style="font-size: 0.92rem; color: var(--on-surface-variant); line-height: 1.5;">${item.definition}</p>
+            </div>
+          `;
+        });
+        container.innerHTML = html;
+      }
+
+      if (window.lucide && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
+      }
+    }
+
+    function setLexiconCategory(cat, btnElement) {
+      activeLexiconCategory = cat;
+      if (btnElement) {
+        const parent = btnElement.parentElement;
+        if (parent) {
+          const siblings = parent.querySelectorAll('.filter-btn');
+          siblings.forEach(b => b.classList.remove('active'));
+          btnElement.classList.add('active');
+        }
+      }
+      const searchInput = document.getElementById('lexicon-search-input');
+      const q = searchInput ? searchInput.value : '';
+      renderLexicon(cat, q);
+    }
+
+    function filterLexicon() {
+      const searchInput = document.getElementById('lexicon-search-input');
+      const q = searchInput ? searchInput.value : '';
+      renderLexicon(activeLexiconCategory, q);
+    }
+
+    /* ==========================================================================
+       INICIALIZACIÓN AL CARGAR LA PÁGINA
+       ========================================================================== */
+    document.addEventListener('DOMContentLoaded', function() {
+      // Create initial icons
+      if (window.lucide && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
+      }
+
+      // Initialize Tab 1 components
+      renderConflicts('all');
+
+      // Initialize Tab 2 calculations
+      calculateMips();
+
+      // Initialize Tab 3 calculations
+      calculateEroi();
+
+      // Initialize Tab 4 lexicon
+      renderLexicon('all', '');
+    });
+  </script>
+</body>
+</html>
